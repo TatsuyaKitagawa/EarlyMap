@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/detail_icon"
+        android:title="detail"
+        app:showAsAction="always"
+        android:icon="@drawable/detail_icon">
+    </item>
+</menu>
