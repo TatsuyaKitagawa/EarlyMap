@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.study.android.earlymap.Dialog.DeleteDialog;
+import com.study.android.earlymap.Dialog.SaveingDialog;
+import com.study.android.earlymap.Dialog.WarningDialog;
 import com.study.android.earlymap.EditListAdapter.EditItemView;
 import com.study.android.earlymap.EditListAdapter.RouteEditAdapter;
 import com.study.android.earlymap.SeeListAdapter.RouteItemView;
@@ -32,7 +36,10 @@ import java.util.List;
  * Created by tatsuya on 2018/03/31.
  */
 
-public class RouteEditActivity extends AppCompatActivity {
+public class RouteEditActivity extends AppCompatActivity
+        implements WarningDialog.WarningDialogListener ,
+        SaveingDialog.SaveingDialogListener,DeleteDialog.DeleteDialogListener
+{
 
     RecyclerView routeListView;
     RouteEditAdapter routeEditAdapter;
@@ -75,20 +82,9 @@ public class RouteEditActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id =item.getItemId();
-        if(id==R.id.detail_icon){
-            new AlertDialog.Builder(RouteEditActivity.this)
-                    .setTitle("確認")
-                    .setMessage("このリストを保存しますか（後からでも編集できます）")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        intent.putExtra("LIST",list);
-                        setResult(RESULT_OK,intent);
-                        finish();
-                        }
-                    })
-                    .setNegativeButton("Cancel",null)
-                    .show();
+        if(id==R.id.detail_icon) {
+            DialogFragment saveDialog = new SaveingDialog();
+            saveDialog.show(getSupportFragmentManager(), "SaveingDialog");
         }
         return true;
     }
@@ -96,21 +92,12 @@ public class RouteEditActivity extends AppCompatActivity {
    public View.OnLongClickListener listLongClick=new View.OnLongClickListener() {
        @Override
        public boolean onLongClick(View v) {
-
            final int pos =routeListView.getChildAdapterPosition(v);
-           new AlertDialog.Builder(RouteEditActivity.this)
-                   .setTitle("確認")
-                   .setMessage(list.get(pos).getDestination()+"を削除しますか？")
-                   .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                       @Override
-                       public void onClick(DialogInterface dialog, int which) {
-                           list.remove(pos);
-                           routeEditAdapter.refreshItem(list);
-                           Toast.makeText(RouteEditActivity.this,"削除",Toast.LENGTH_LONG).show();
-                       }
-                   })
-                   .setNegativeButton("Cancel",null)
-                   .show();
+           DialogFragment deleteDialog=new DeleteDialog();
+           Bundle bundle=new Bundle();
+           bundle.putInt("DELETE_KEY",pos);
+           deleteDialog.setArguments(bundle);
+           deleteDialog.show(getSupportFragmentManager(),"DeleteDialog");
            return false;
        }
 
@@ -135,34 +122,28 @@ public class RouteEditActivity extends AppCompatActivity {
         routeEditAdapter.refreshItem(list);
     }
 
-//    @Override
-//    protected Dialog onCreateDialog(int id) {
-//        AlertDialog.Builder builder= new AlertDialog.Builder(RouteEditActivity.this);
-//               builder.setTitle("確認")
-//                .setMessage("前の画面に移動しますか？（保存はされません）")
-//                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        finish();
-//                    }
-//                })
-//                .setNegativeButton("Cancel",null);
-//
-//        return builder.create();
-//    }
-
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder= new AlertDialog.Builder(RouteEditActivity.this);
-        builder.setTitle("確認")
-                .setMessage("前の画面に移動しますか？（保存はされません）")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
-                .setNegativeButton("Cancel",null)
-                .show();
+        DialogFragment warnDialog=new WarningDialog();
+        warnDialog.show(getSupportFragmentManager(),"WarningDialog");
+    }
+
+    @Override
+    public void onWarnDialogClick(DialogFragment dialogFragment) {
+        finish();
+    }
+
+    @Override
+    public void onSaveDialogClick(DialogFragment dialogFragment) {
+        intent.putExtra("LIST",list);
+        setResult(RESULT_OK,intent);
+        finish();
+    }
+
+    @Override
+    public void onDeleteDialogClick(DialogFragment dialogFragment,int pos) {
+        list.remove(pos);
+        routeEditAdapter.refreshItem(list);
+        Toast.makeText(RouteEditActivity.this,"削除",Toast.LENGTH_LONG).show();
     }
 }
