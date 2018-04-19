@@ -20,9 +20,7 @@ import java.util.List;
  */
 
 public class RouteEditAdapter extends RecyclerView.Adapter<RouteEditAdapter.ViewHolder> {
-
     private LayoutInflater layoutInflater;
-    //private List<EditItemView> list;
     private List<RouteItemView> list;
     private View.OnLongClickListener onLongClickListener;
 

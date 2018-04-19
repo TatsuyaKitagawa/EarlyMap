@@ -8,4 +8,41 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AddButtonStyle" parent="android:Widget.Button">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:background">@drawable/add_button_view</item>
+    </style>
+
+    <style name="walking" parent="android:Widget.Button">
+        <item name="android:textColor">#444444</item>
+        <item name="android:text">徒歩</item>
+        <item name="android:button">@null</item>
+        <item name="android:padding">10dip</item>
+        <item name="android:background">@drawable/mode_radio_view</item>
+    </style>
+
+    <style name="driving" parent="android:Widget.Button">
+        <item name="android:textColor">#444444</item>
+        <item name="android:text">自動車</item>
+        <item name="android:button">@null</item>
+        <item name="android:padding">10dip</item>
+        <item name="android:background">@drawable/mode_radio_view</item>
+    </style>
+
+    <style name="bicycling" parent="android:Widget.Button">
+        <item name="android:textColor">#444444</item>
+        <item name="android:text">自転車</item>
+        <item name="android:button">@null</item>
+        <item name="android:padding">10dip</item>
+        <item name="android:background">@drawable/mode_radio_view</item>
+    </style>
+
+    <style name="transit" parent="android:Widget.Button">
+        <item name="android:textColor">#444444</item>
+        <item name="android:text">バス・電車</item>
+        <item name="android:button">@null</item>
+        <item name="android:padding">10dip</item>
+        <item name="android:background">@drawable/mode_radio_view</item>
+    </style>
+
 </resources>

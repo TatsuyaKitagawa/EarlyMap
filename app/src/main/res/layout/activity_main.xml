@@ -5,22 +5,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.study.android.earlymap.MainActivity">
+    android:background="@color/cardview_dark_background"
+    tools:context="com.study.android.earlymap.VIew.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="?attr/colorAccent"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/route_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <RadioGroup
+            android:id="@+id/mode_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    </android.support.v7.widget.RecyclerView>
+            <RadioButton
+                android:id="@+id/walking_button"
+                style="@style/walking"
+                android:layout_width="0dip"
+                android:layout_height="47dp"
+                android:layout_weight="1"
+                android:checked="true" />
 
+            <RadioButton
+                android:id="@+id/driving_button"
+                style="@style/driving"
+                android:layout_width="0dip"
+                android:layout_height="50dp"
+                android:layout_weight="1" />
+            <!--<RadioButton-->
+                <!--android:id="@+id/bicycling_button"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_width="0dip"-->
+                <!--android:layout_height="50dp"-->
+                <!--style="@style/bicycling"/>-->
+            <RadioButton
+                android:id="@+id/transit_button"
+                android:layout_weight="1"
+                android:layout_width="0dip"
+                android:layout_height="50dp"
+                style="@style/transit"/>
+        </RadioGroup>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/route_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
 </LinearLayout>
