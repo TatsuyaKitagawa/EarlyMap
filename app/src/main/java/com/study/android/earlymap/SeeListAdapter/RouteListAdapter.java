@@ -45,18 +45,18 @@ public class RouteListAdapter extends RecyclerView.Adapter<RouteListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final RouteItemView listItem=list.get(position);
+        final RouteItemView listItem = list.get(position);
         holder.desText.setText(listItem.getDestination());
-        holder.timeText.setText(listItem.getTime());
+        holder.takeTimeText.setText(listItem.getTime());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView desText;
-        TextView timeText;
+        TextView takeTimeText;
         public ViewHolder(View itemView){
             super(itemView);
             desText=itemView.findViewById(R.id.des_name);
-            timeText=itemView.findViewById(R.id.take_time);
+            takeTimeText=itemView.findViewById(R.id.taketime_textview);
         }
     }
 
